@@ -1,0 +1,33 @@
+{
+  "name": "@solvitur/missitando",
+  "version": "1.0.0",
+  "description": "A zero-dependency alternative to Express",
+  "homepage": "https://github.com/solvitur/missitando",
+  "scripts": {
+    "fix": "xo --fix",
+    "lint": "xo",
+    "test": "npx ava"
+  },
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "type": "module",
+  "author": "Schuyler Ullman <schuyler.ullman@gmail.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solvitur/missitando.git"
+  },
+  "bugs": {
+    "url": "https://github.com/solvitur/missitando/issues"
+  },
+  "devDependencies": {
+    "ava": "4.0.0-alpha.2",
+    "supertest-fetch": "1.4.3",
+    "xo": "0.46.0"
+  }
+}

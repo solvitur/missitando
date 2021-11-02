@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "curly": ["error", "multi-line"],
+    "import/no-anonymous-default-export": "off",
+    "no-else-return": ["error", { "allowElseIf": true }],
+    "object-curly-spacing": ["error", "always"],
+    "unicorn/catch-error-name": ["error", { "name": "err" }],
+    "unicorn/filename-case": "off",
+    "unicorn/prevent-abbreviations": "off"
+  }
+}
