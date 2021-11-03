@@ -131,8 +131,13 @@ export class App {
 					req.url = ensureLeading(req.url.slice(matched.length));
 				}
 
+				const origUrl = req.url;
+
 				const wrappedNext = () => {
-					Object.assign(req, previousValues);
+					if (origUrl === req.url) {
+						Object.assign(req, previousValues);
+					}
+
 					next();
 				};
 

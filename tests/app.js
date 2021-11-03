@@ -350,3 +350,27 @@ test('network extensions, trust proxy', async t => {
 		secure: true
 	});
 });
+
+test('rewriting req.url in middleware affects future routing', async t => {
+	const app = new App();
+
+	app.use((req, res, next) => {
+		req.url = '/foo' + req.url;
+		next();
+	});
+
+	app.get('/foo/bar', reqInfoHandler);
+
+	const fetch = startApp(app);
+
+	await fetch('/bar')
+		.expect(200, {
+			baseUrl: '/',
+			originalUrl: '/bar',
+			path: '/foo/bar',
+			route: '/foo/bar',
+			url: '/foo/bar'
+		});
+
+	t.pass();
+});
