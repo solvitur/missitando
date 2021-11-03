@@ -39,6 +39,25 @@ test('simple route', async t => {
 	t.pass();
 });
 
+test('simple middleware', async t => {
+	const app = new App();
+
+	app.use(reqInfoHandler);
+
+	const fetch = startApp(app);
+
+	await fetch('/users/34')
+		.expect(200, {
+			baseUrl: '/',
+			originalUrl: '/users/34',
+			path: '/users/34',
+			route: '/',
+			url: '/users/34'
+		});
+
+	t.pass();
+});
+
 test('middleware handler', async t => {
 	const app = new App();
 

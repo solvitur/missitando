@@ -98,7 +98,7 @@ export class App {
 			const handler = handlers[i++];
 
 			let matches = true;
-			let matched = req.path;
+			let matched = '/';
 
 			if (typeof handler === 'function') {
 				matched = '';
@@ -125,7 +125,7 @@ export class App {
 
 				req.route = nodePath.join(req.route, handler.label || matched);
 
-				if (handler.prefix) {
+				if (handler.prefix && matched !== '/') {
 					req.baseUrl = nodePath.join(req.baseUrl, matched);
 					req.path = ensureLeading(req.path.slice(matched.length));
 					req.url = ensureLeading(req.url.slice(matched.length));
