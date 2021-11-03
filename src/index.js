@@ -46,6 +46,7 @@ export class App {
 		this.server = options.server;
 		this.noMatchHandler = options.noMatchHandler ?? onNoMatch;
 		this.errorHandler = (options.errorHandler ?? onError) || throwError;
+		this.trustProxy = options.trustProxy;
 
 		// Only a few of these will ever be used, but it's easy enough to add them all
 		for (const method of http.METHODS) {
@@ -66,7 +67,7 @@ export class App {
 	}
 
 	handler(req, res, next) {
-		applyExtensions(req, res);
+		applyExtensions(this, req, res);
 
 		next = this.noMatchHandler ? this.noMatchHandler.bind(null, req, res) : next;
 		this.runHandlers(req, res, this.handlers, next);

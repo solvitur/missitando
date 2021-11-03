@@ -267,3 +267,67 @@ test('sub app errors bubble up', async t => {
 	await fetch('/foo/bar')
 		.expect(503);
 });
+
+test('network extensions', async t => {
+	const app = new App({ trustProxy: false });
+
+	app.get('/ext', (req, res) => {
+		res.send({
+			host: req.host,
+			hostname: req.hostname,
+			ip: req.ip,
+			protocol: req.protocol,
+			secure: req.secure
+		});
+	});
+
+	const fetch = startApp(app);
+
+	const headers = {
+		Host: 'internal.app:8888',
+		'X-Forwarded-Host': 'solvitur.dev',
+		'X-Forwarded-Proto': 'https',
+		'X-Forwarded-For': '1.2.3.4, 10.0.0.10'
+	};
+
+	const response = await fetch('/ext', { headers }).expect(200).json();
+	t.like(response, {
+		host: 'internal.app:8888',
+		hostname: 'internal.app',
+		ip: '127.0.0.1',
+		protocol: 'http',
+		secure: false
+	});
+});
+
+test('network extensions, trust proxy', async t => {
+	const app = new App();
+
+	app.get('/ext', (req, res) => {
+		res.send({
+			host: req.host,
+			hostname: req.hostname,
+			ip: req.ip,
+			protocol: req.protocol,
+			secure: req.secure
+		});
+	});
+
+	const fetch = startApp(app);
+
+	const headers = {
+		Host: 'internal.app:8888',
+		'X-Forwarded-Host': 'solvitur.dev',
+		'X-Forwarded-Proto': 'https',
+		'X-Forwarded-For': '1.2.3.4, 10.0.0.10'
+	};
+
+	const response = await fetch('/ext', { headers }).expect(200).json();
+	t.like(response, {
+		host: 'solvitur.dev',
+		hostname: 'solvitur.dev',
+		ip: '1.2.3.4',
+		protocol: 'https',
+		secure: true
+	});
+});
