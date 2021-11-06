@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A zero-dependency alternative to Express",
   "homepage": "https://github.com/solvitur/missitando",
+  "private": false,
   "scripts": {
     "fix": "xo --fix",
     "lint": "xo",
