@@ -1,6 +1,6 @@
 {
   "name": "@solvitur/missitando",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A zero-dependency alternative to Express",
   "homepage": "https://github.com/solvitur/missitando",
   "private": false,
