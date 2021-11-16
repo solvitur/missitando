@@ -19,13 +19,14 @@ const TYPES = {
 };
 
 function redirect(status, path) {
-	if (!path && typeof status === 'number') {
+	if (!path) {
 		path = status;
-		status = 301;
+		status = 302;
 	}
 
 	this.statusCode = status;
 	this.setHeader(LOCATION, path);
+	this.end();
 
 	return this;
 }
